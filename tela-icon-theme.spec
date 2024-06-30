@@ -1,7 +1,7 @@
 #
-# spec file for package arc-icon-theme
+# spec file for package tela-icon-theme
 #
-# Copyright (c) 2019 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2024 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -17,19 +17,13 @@
 
 
 Name:           tela-icon-theme
-Version:        0
+Version:        1719755616.c1b9a41
 Release:        0
 Summary:        Tela Icon Theme
 License:        GPL-3.0-or-later
 Url:            https://github.com/vinceliuice/Tela-icon-theme
 Source:         https://github.com/vinceliuice/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-BuildRequires:  autoconf
-BuildRequires:  automake
 BuildRequires:  fdupes
-BuildRequires:  hicolor-icon-theme
-BuildRequires:  icon-naming-utils >= 0.8.7
-Requires:       adwaita-icon-theme
-Recommends:     moka-icon-theme
 BuildArch:      noarch
 
 %description
@@ -39,10 +33,14 @@ A flat, colorful icon theme
 %autosetup
 
 %install
-TELA_DEST_DIR=%{buildroot}%{_datadir}/icons/ . install.sh
-install -Dm644 README.md %{_defaultdocdir}/README.md
-install -Dm644 COPYING %{_defaultdocdir}/COPYING
-install -Dm644 AUTHORS %{_defaultdocdir}/CREDITS
+chmod 755 ./install.sh
+TELA_DEST_DIR=%{buildroot}%{_datadir}/icons/ ./install.sh
+mv AUTHORS CREDITS
+mkdir -pv %{buildroot}%{_defaultdocdir}/%{name}
+for i in README.md COPYING CREDITS
+do
+ cp "$i" %{buildroot}%{_defaultdocdir}/%{name}/
+done
 %fdupes %{buildroot}%{_datadir}/icons/
 
 # No need for %%icon_theme_cache_postun in %%postun since the theme won't exist anymore.
