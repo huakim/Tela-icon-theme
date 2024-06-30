@@ -139,132 +139,132 @@ install_theme() {
 
   echo "Installing '${THEME_NAME}'..."
 
-  install -d "${THEME_DIR}"
+  install -d "${INSTALLROOT}${THEME_DIR}"
 
-  install -m644 "${SRC_DIR}/src/index.theme"                                     "${THEME_DIR}"
+  install -m644 "${SRC_DIR}/src/index.theme"                                     "${INSTALLROOT}${THEME_DIR}"
 
   # Update the name in index.theme
-  sed -i "s/%NAME%/${THEME_NAME//-/ }/g"                                         "${THEME_DIR}/index.theme"
+  sed -i "s/%NAME%/${THEME_NAME//-/ }/g"                                         "${INSTALLROOT}${THEME_DIR}/index.theme"
 
   if [[ -z "${brightprefix}" ]]; then
-    cp -r "${SRC_DIR}"/src/{16,22,24,32,scalable,symbolic}                       "${THEME_DIR}"
+    cp -r "${SRC_DIR}"/src/{16,22,24,32,scalable,symbolic}                       "${INSTALLROOT}${THEME_DIR}"
 
     if [[ "$1" != "standard" ]]; then
-      sed -i "s/#5294e2/${theme_color}/g" "${THEME_DIR}/scalable/apps/"*.svg "${THEME_DIR}/scalable/places/"default-*.svg "${THEME_DIR}/16/places/"folder*.svg
-      sed -i "/\ColorScheme-Highlight/s/currentColor/${theme_color}/" "${THEME_DIR}/scalable/places/"default-*.svg "${THEME_DIR}/16/places/"folder*.svg
-      sed -i "/\ColorScheme-Background/s/currentColor/${theme_back_color}/" "${THEME_DIR}/scalable/places/"default-*.svg
+      sed -i "s/#5294e2/${theme_color}/g" "${INSTALLROOT}${THEME_DIR}/scalable/apps/"*.svg "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
+      sed -i "/\ColorScheme-Highlight/s/currentColor/${theme_color}/" "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
+      sed -i "/\ColorScheme-Background/s/currentColor/${theme_back_color}/" "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg
 
       if [[ "$1" == "dracula" ]]; then
-        sed -i '/\id="shadow"/s/#000000/#bd93f9/' "${THEME_DIR}/scalable/apps/"*.svg "${THEME_DIR}/scalable/places/"default-*.svg
-        sed -i '/\id="shadow"/s/ opacity=".2"//' "${THEME_DIR}/scalable/apps/"*.svg "${THEME_DIR}/scalable/places/"default-*.svg
-        sed -i '/\id="bottom_layer"/s/#44475a/#bd93f9/' "${THEME_DIR}/16/places/"folder*.svg
-        sed -i '/\id="bottom_layer"/s/ opacity="0.5"//' "${THEME_DIR}/16/places/"folder*.svg
-        sed -i "s/color:#ffffff/color:#f8f8f2/g" "${THEME_DIR}/scalable/places/"default-*.svg
-        sed -i "s/${theme_color}/#dd86e0/g" "${THEME_DIR}/scalable/places/"default-user-desktop.svg
-        sed -i '/\id="highlight"/s/opacity=".25"/opacity="0"/' "${THEME_DIR}/scalable/places/"default-user-desktop.svg
-        sed -i "s/#5294e2/#bd93f9/g" "${THEME_DIR}/scalable/devices/"*.svg "${THEME_DIR}/32/devices/"*.svg
+        sed -i '/\id="shadow"/s/#000000/#bd93f9/' "${INSTALLROOT}${THEME_DIR}/scalable/apps/"*.svg "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg
+        sed -i '/\id="shadow"/s/ opacity=".2"//' "${INSTALLROOT}${THEME_DIR}/scalable/apps/"*.svg "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg
+        sed -i '/\id="bottom_layer"/s/#44475a/#bd93f9/' "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
+        sed -i '/\id="bottom_layer"/s/ opacity="0.5"//' "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
+        sed -i "s/color:#ffffff/color:#f8f8f2/g" "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg
+        sed -i "s/${theme_color}/#dd86e0/g" "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-user-desktop.svg
+        sed -i '/\id="highlight"/s/opacity=".25"/opacity="0"/' "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-user-desktop.svg
+        sed -i "s/#5294e2/#bd93f9/g" "${INSTALLROOT}${THEME_DIR}/scalable/devices/"*.svg "${INSTALLROOT}${THEME_DIR}/32/devices/"*.svg
       elif [[ "$1" == "grey" ]]; then
-        sed -i "s/color:#ffffff/color:#666666/g" "${THEME_DIR}/scalable/places/"default-*.svg
-        sed -i "s/#5294e2/#666666/g" "${THEME_DIR}/scalable/devices/"*.svg "${THEME_DIR}/32/devices/"*.svg
+        sed -i "s/color:#ffffff/color:#666666/g" "${INSTALLROOT}${THEME_DIR}/scalable/places/"default-*.svg
+        sed -i "s/#5294e2/#666666/g" "${INSTALLROOT}${THEME_DIR}/scalable/devices/"*.svg "${INSTALLROOT}${THEME_DIR}/32/devices/"*.svg
       else
-        sed -i "s/#5294e2/${theme_color}/g" "${THEME_DIR}/scalable/devices/"*.svg "${THEME_DIR}/32/devices/"*.svg
+        sed -i "s/#5294e2/${theme_color}/g" "${INSTALLROOT}${THEME_DIR}/scalable/devices/"*.svg "${INSTALLROOT}${THEME_DIR}/32/devices/"*.svg
       fi
     fi
 
-    cp -r "${SRC_DIR}"/links/{16,22,24,32,scalable,symbolic}                     "${THEME_DIR}"
+    cp -r "${SRC_DIR}"/links/{16,22,24,32,scalable,symbolic}                     "${INSTALLROOT}${THEME_DIR}"
 
     if [[ "${ICON_VERSION}" == 'elementary' || "$DESKTOP_SESSION" == 'xfce' ]]; then
-      cp -r "${SRC_DIR}/elementary/"*                                            "${THEME_DIR}"
+      cp -r "${SRC_DIR}/elementary/"*                                            "${INSTALLROOT}${THEME_DIR}"
     fi
   fi
 
   if [[ "${brightprefix}" == '-light' ]]; then
     local -r STD_THEME_DIR="${THEME_DIR%-light}"
 
-    install -d "${THEME_DIR}"/{16,22,24}
+    install -d "${INSTALLROOT}${THEME_DIR}"/{16,22,24}
 
-    cp -r "${SRC_DIR}"/src/16/panel                                              "${THEME_DIR}/16"
-    cp -r "${SRC_DIR}"/src/22/panel                                              "${THEME_DIR}/22"
-    cp -r "${SRC_DIR}"/src/24/panel                                              "${THEME_DIR}/24"
+    cp -r "${SRC_DIR}"/src/16/panel                                              "${INSTALLROOT}${THEME_DIR}/16"
+    cp -r "${SRC_DIR}"/src/22/panel                                              "${INSTALLROOT}${THEME_DIR}/22"
+    cp -r "${SRC_DIR}"/src/24/panel                                              "${INSTALLROOT}${THEME_DIR}/24"
 
     # Change icon color for dark theme
-    sed -i "s/#dfdfdf/#505050/g" "${THEME_DIR}"/{16,22,24}/panel/*.svg
+    sed -i "s/#dfdfdf/#505050/g" "${INSTALLROOT}${THEME_DIR}"/{16,22,24}/panel/*.svg
 
-    cp -r "${SRC_DIR}"/links/16/panel                                            "${THEME_DIR}/16"
-    cp -r "${SRC_DIR}"/links/22/panel                                            "${THEME_DIR}/22"
-    cp -r "${SRC_DIR}"/links/24/panel                                            "${THEME_DIR}/24"
+    cp -r "${SRC_DIR}"/links/16/panel                                            "${INSTALLROOT}${THEME_DIR}/16"
+    cp -r "${SRC_DIR}"/links/22/panel                                            "${INSTALLROOT}${THEME_DIR}/22"
+    cp -r "${SRC_DIR}"/links/24/panel                                            "${INSTALLROOT}${THEME_DIR}/24"
 
     # Link the common icons
-    ln -sr "${STD_THEME_DIR}/scalable"                                           "${THEME_DIR}/scalable"
-    ln -sr "${STD_THEME_DIR}/32"                                                 "${THEME_DIR}/32"
-    ln -sr "${STD_THEME_DIR}/16/actions"                                         "${THEME_DIR}/16/actions"
-    ln -sr "${STD_THEME_DIR}/16/apps"                                            "${THEME_DIR}/16/apps"
-    ln -sr "${STD_THEME_DIR}/16/devices"                                         "${THEME_DIR}/16/devices"
-    ln -sr "${STD_THEME_DIR}/16/mimetypes"                                       "${THEME_DIR}/16/mimetypes"
-    ln -sr "${STD_THEME_DIR}/16/places"                                          "${THEME_DIR}/16/places"
-    ln -sr "${STD_THEME_DIR}/16/status"                                          "${THEME_DIR}/16/status"
-    ln -sr "${STD_THEME_DIR}/22/actions"                                         "${THEME_DIR}/22/actions"
-    ln -sr "${STD_THEME_DIR}/22/devices"                                         "${THEME_DIR}/22/devices"
-    ln -sr "${STD_THEME_DIR}/22/emblems"                                         "${THEME_DIR}/22/emblems"
-    ln -sr "${STD_THEME_DIR}/22/mimetypes"                                       "${THEME_DIR}/22/mimetypes"
-    ln -sr "${STD_THEME_DIR}/22/places"                                          "${THEME_DIR}/22/places"
-    ln -sr "${STD_THEME_DIR}/24/actions"                                         "${THEME_DIR}/24/actions"
-    ln -sr "${STD_THEME_DIR}/24/animations"                                      "${THEME_DIR}/24/animations"
-    ln -sr "${STD_THEME_DIR}/24/devices"                                         "${THEME_DIR}/24/devices"
-    ln -sr "${STD_THEME_DIR}/24/places"                                          "${THEME_DIR}/24/places"
-    ln -sr "${STD_THEME_DIR}/symbolic"                                           "${THEME_DIR}/symbolic"
+    ln -sr "${STD_THEME_DIR}/scalable"                                           "${INSTALLROOT}${THEME_DIR}/scalable"
+    ln -sr "${STD_THEME_DIR}/32"                                                 "${INSTALLROOT}${THEME_DIR}/32"
+    ln -sr "${STD_THEME_DIR}/16/actions"                                         "${INSTALLROOT}${THEME_DIR}/16/actions"
+    ln -sr "${STD_THEME_DIR}/16/apps"                                            "${INSTALLROOT}${THEME_DIR}/16/apps"
+    ln -sr "${STD_THEME_DIR}/16/devices"                                         "${INSTALLROOT}${THEME_DIR}/16/devices"
+    ln -sr "${STD_THEME_DIR}/16/mimetypes"                                       "${INSTALLROOT}${THEME_DIR}/16/mimetypes"
+    ln -sr "${STD_THEME_DIR}/16/places"                                          "${INSTALLROOT}${THEME_DIR}/16/places"
+    ln -sr "${STD_THEME_DIR}/16/status"                                          "${INSTALLROOT}${THEME_DIR}/16/status"
+    ln -sr "${STD_THEME_DIR}/22/actions"                                         "${INSTALLROOT}${THEME_DIR}/22/actions"
+    ln -sr "${STD_THEME_DIR}/22/devices"                                         "${INSTALLROOT}${THEME_DIR}/22/devices"
+    ln -sr "${STD_THEME_DIR}/22/emblems"                                         "${INSTALLROOT}${THEME_DIR}/22/emblems"
+    ln -sr "${STD_THEME_DIR}/22/mimetypes"                                       "${INSTALLROOT}${THEME_DIR}/22/mimetypes"
+    ln -sr "${STD_THEME_DIR}/22/places"                                          "${INSTALLROOT}${THEME_DIR}/22/places"
+    ln -sr "${STD_THEME_DIR}/24/actions"                                         "${INSTALLROOT}${THEME_DIR}/24/actions"
+    ln -sr "${STD_THEME_DIR}/24/animations"                                      "${INSTALLROOT}${THEME_DIR}/24/animations"
+    ln -sr "${STD_THEME_DIR}/24/devices"                                         "${INSTALLROOT}${THEME_DIR}/24/devices"
+    ln -sr "${STD_THEME_DIR}/24/places"                                          "${INSTALLROOT}${THEME_DIR}/24/places"
+    ln -sr "${STD_THEME_DIR}/symbolic"                                           "${INSTALLROOT}${THEME_DIR}/symbolic"
   fi
 
   if [[ "${brightprefix}" == '-dark' ]]; then
     local -r STD_THEME_DIR="${THEME_DIR%-dark}"
 
-    install -d "${THEME_DIR}"/{16,22,24,symbolic}
+    install -d "${INSTALLROOT}${THEME_DIR}"/{16,22,24,symbolic}
 
-    cp -r "${SRC_DIR}"/src/16/{actions,devices,places}                           "${THEME_DIR}/16"
-    cp -r "${SRC_DIR}"/src/22/{actions,devices,places}                           "${THEME_DIR}/22"
-    cp -r "${SRC_DIR}"/src/24/{actions,devices,places}                           "${THEME_DIR}/24"
-    cp -r "${SRC_DIR}"/src/symbolic/*                                            "${THEME_DIR}/symbolic"
+    cp -r "${SRC_DIR}"/src/16/{actions,devices,places}                           "${INSTALLROOT}${THEME_DIR}/16"
+    cp -r "${SRC_DIR}"/src/22/{actions,devices,places}                           "${INSTALLROOT}${THEME_DIR}/22"
+    cp -r "${SRC_DIR}"/src/24/{actions,devices,places}                           "${INSTALLROOT}${THEME_DIR}/24"
+    cp -r "${SRC_DIR}"/src/symbolic/*                                            "${INSTALLROOT}${THEME_DIR}/symbolic"
 
     # Change icon color for dark theme
-    sed -i "s/#565656/#aaaaaa/g" "${THEME_DIR}"/{16,22,24}/actions/*.svg
-    sed -i "s/#727272/#aaaaaa/g" "${THEME_DIR}"/{16,22,24}/{places,devices}/*.svg
-    sed -i "s/#565656/#aaaaaa/g" "${THEME_DIR}"/symbolic/{actions,apps,categories,devices,emblems,emotes,mimetypes,places,status}/*.svg
+    sed -i "s/#565656/#aaaaaa/g" "${INSTALLROOT}${THEME_DIR}"/{16,22,24}/actions/*.svg
+    sed -i "s/#727272/#aaaaaa/g" "${INSTALLROOT}${THEME_DIR}"/{16,22,24}/{places,devices}/*.svg
+    sed -i "s/#565656/#aaaaaa/g" "${INSTALLROOT}${THEME_DIR}"/symbolic/{actions,apps,categories,devices,emblems,emotes,mimetypes,places,status}/*.svg
 
     if [[ "$1" != "standard" ]]; then
-      sed -i "s/#5294e2/${theme_color}/g" "${THEME_DIR}/16/places/"folder*.svg
+      sed -i "s/#5294e2/${theme_color}/g" "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
 
       if [[ "$1" == "dracula" ]]; then
-        sed -i '/\id="bottom_layer"/s/currentColor/#bd93f9/' "${THEME_DIR}/16/places/"folder*.svg
-        sed -i '/\id="bottom_layer"/s/ opacity="0.5"//' "${THEME_DIR}/16/places/"folder*.svg
+        sed -i '/\id="bottom_layer"/s/currentColor/#bd93f9/' "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
+        sed -i '/\id="bottom_layer"/s/ opacity="0.5"//' "${INSTALLROOT}${THEME_DIR}/16/places/"folder*.svg
       fi
     fi
 
-    cp -r "${SRC_DIR}"/links/16/{actions,devices,places}                         "${THEME_DIR}/16"
-    cp -r "${SRC_DIR}"/links/22/{actions,devices,places}                         "${THEME_DIR}/22"
-    cp -r "${SRC_DIR}"/links/24/{actions,devices,places}                         "${THEME_DIR}/24"
-    cp -r "${SRC_DIR}"/links/symbolic/*                                          "${THEME_DIR}/symbolic"
+    cp -r "${SRC_DIR}"/links/16/{actions,devices,places}                         "${INSTALLROOT}${THEME_DIR}/16"
+    cp -r "${SRC_DIR}"/links/22/{actions,devices,places}                         "${INSTALLROOT}${THEME_DIR}/22"
+    cp -r "${SRC_DIR}"/links/24/{actions,devices,places}                         "${INSTALLROOT}${THEME_DIR}/24"
+    cp -r "${SRC_DIR}"/links/symbolic/*                                          "${INSTALLROOT}${THEME_DIR}/symbolic"
 
     # Link the common icons
-    ln -sr "${STD_THEME_DIR}/scalable"                                           "${THEME_DIR}/scalable"
-    ln -sr "${STD_THEME_DIR}/32"                                                 "${THEME_DIR}/32"
-    ln -sr "${STD_THEME_DIR}/16/apps"                                            "${THEME_DIR}/16/apps"
-    ln -sr "${STD_THEME_DIR}/16/mimetypes"                                       "${THEME_DIR}/16/mimetypes"
-    ln -sr "${STD_THEME_DIR}/16/panel"                                           "${THEME_DIR}/16/panel"
-    ln -sr "${STD_THEME_DIR}/16/status"                                          "${THEME_DIR}/16/status"
-    ln -sr "${STD_THEME_DIR}/22/emblems"                                         "${THEME_DIR}/22/emblems"
-    ln -sr "${STD_THEME_DIR}/22/mimetypes"                                       "${THEME_DIR}/22/mimetypes"
-    ln -sr "${STD_THEME_DIR}/22/panel"                                           "${THEME_DIR}/22/panel"
-    ln -sr "${STD_THEME_DIR}/24/animations"                                      "${THEME_DIR}/24/animations"
-    ln -sr "${STD_THEME_DIR}/24/panel"                                           "${THEME_DIR}/24/panel"
+    ln -sr "${STD_THEME_DIR}/scalable"                                           "${INSTALLROOT}${THEME_DIR}/scalable"
+    ln -sr "${STD_THEME_DIR}/32"                                                 "${INSTALLROOT}${THEME_DIR}/32"
+    ln -sr "${STD_THEME_DIR}/16/apps"                                            "${INSTALLROOT}${THEME_DIR}/16/apps"
+    ln -sr "${STD_THEME_DIR}/16/mimetypes"                                       "${INSTALLROOT}${THEME_DIR}/16/mimetypes"
+    ln -sr "${STD_THEME_DIR}/16/panel"                                           "${INSTALLROOT}${THEME_DIR}/16/panel"
+    ln -sr "${STD_THEME_DIR}/16/status"                                          "${INSTALLROOT}${THEME_DIR}/16/status"
+    ln -sr "${STD_THEME_DIR}/22/emblems"                                         "${INSTALLROOT}${THEME_DIR}/22/emblems"
+    ln -sr "${STD_THEME_DIR}/22/mimetypes"                                       "${INSTALLROOT}${THEME_DIR}/22/mimetypes"
+    ln -sr "${STD_THEME_DIR}/22/panel"                                           "${INSTALLROOT}${THEME_DIR}/22/panel"
+    ln -sr "${STD_THEME_DIR}/24/animations"                                      "${INSTALLROOT}${THEME_DIR}/24/animations"
+    ln -sr "${STD_THEME_DIR}/24/panel"                                           "${INSTALLROOT}${THEME_DIR}/24/panel"
   fi
 
-  ln -sr "${THEME_DIR}/16"                                                       "${THEME_DIR}/16@2x"
-  ln -sr "${THEME_DIR}/22"                                                       "${THEME_DIR}/22@2x"
-  ln -sr "${THEME_DIR}/24"                                                       "${THEME_DIR}/24@2x"
-  ln -sr "${THEME_DIR}/32"                                                       "${THEME_DIR}/32@2x"
-  ln -sr "${THEME_DIR}/scalable"                                                 "${THEME_DIR}/scalable@2x"
+  ln -sr "${THEME_DIR}/16"                                                       "${INSTALLROOT}${THEME_DIR}/16@2x"
+  ln -sr "${THEME_DIR}/22"                                                       "${INSTALLROOT}${THEME_DIR}/22@2x"
+  ln -sr "${THEME_DIR}/24"                                                       "${INSTALLROOT}${THEME_DIR}/24@2x"
+  ln -sr "${THEME_DIR}/32"                                                       "${INSTALLROOT}${THEME_DIR}/32@2x"
+  ln -sr "${THEME_DIR}/scalable"                                                 "${INSTALLROOT}${THEME_DIR}/scalable@2x"
 
-  gtk-update-icon-cache "${THEME_DIR}"
+  gtk-update-icon-cache "${INSTALLROOT}${THEME_DIR}"
 }
 
 while [ $# -gt 0 ]; do
