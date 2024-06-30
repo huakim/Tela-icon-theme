@@ -25,6 +25,7 @@ Url:            https://github.com/vinceliuice/Tela-icon-theme
 Source:         https://github.com/vinceliuice/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildRequires:  fdupes
 BuildRequires:  gtk3-tools
+BuildRequires:  sed
 BuildArch:      noarch
 
 %description
