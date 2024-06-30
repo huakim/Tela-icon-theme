@@ -36,7 +36,7 @@ A flat, colorful icon theme
 
 %install
 chmod 755 ./install.sh
-TELA_DEST_DIR=%{buildroot}%{_datadir}/icons/ ./install.sh
+INSTALLROOT=%{buildroot} TELA_DEST_DIR=%{_datadir}/icons/ ./install.sh
 mv AUTHORS CREDITS
 mkdir -pv %{buildroot}%{_defaultdocdir}/%{name}
 for i in README.md COPYING CREDITS
