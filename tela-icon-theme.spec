@@ -50,6 +50,7 @@ install -Dm644 AUTHORS %{_defaultdocdir}/CREDITS
 %files
 %defattr(-,root,root)
 %doc COPYING CREDITS README.md
-%{_datadir}/icons/*/
+%{_datadir}/icons/*
+%dir %{_datadir}/icons
 
 %changelog
